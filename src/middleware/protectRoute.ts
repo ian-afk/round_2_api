@@ -32,5 +32,6 @@ export const protect = catchAsync(async (req, res, next) => {
     return next(new AppError('The user does not exists', 401));
   }
 
+  req.user = { id: decoded.userId };
   next();
 });
