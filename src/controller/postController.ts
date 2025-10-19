@@ -9,7 +9,9 @@ import {
 import { catchAsync } from '../utils/catchAsync';
 
 export const createPost = catchAsync(async (req: Request, res: Response) => {
-  const newPost = await createPostService(req.body);
+  const { content } = req.body;
+  const userId = req.user.id;
+  const newPost = await createPostService({ content, user: userId });
 
   res.status(201).json({
     status: 'success',
