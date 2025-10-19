@@ -1,12 +1,17 @@
 import { Post } from '../db/models/post';
 
 export const listPost = async () => {
-  const post = await Post.find({});
+  const post = await Post.find({})
+    .populate({
+      path: 'comments', // populate the comments array
+      populate: { path: 'user', select: 'username profilePic' }, // populate each comment's user
+    })
+    .populate('user', 'username profilePic');
   return post;
 };
 
-export const createPost = async ({ content }) => {
-  const post = await Post.create({ content });
+export const createPost = async ({ content, user }) => {
+  const post = await Post.create({ content, user });
 
   return post;
 };
