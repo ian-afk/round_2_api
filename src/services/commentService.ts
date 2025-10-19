@@ -30,30 +30,20 @@ export const findCommentById = async (commentId: string) => {
 
 interface UpdateCommentI {
   comment?: string;
-  task?: string;
-  user?: string;
-  suppFiles?: string[];
 }
 
 export const updateComment = async (
   commentId: string,
-  { comment, task, user, suppFiles }: UpdateCommentI,
+  { comment }: UpdateCommentI,
 ) => {
-  const columnUpdate = Object.fromEntries(
-    Object.entries({
-      comment,
-      task,
-      user,
-      suppFiles,
-    }).filter(([, v]) => v !== undefined),
-  );
-
   return await Comment.findOneAndUpdate(
     {
       _id: commentId,
     },
     {
-      $set: columnUpdate,
+      $set: {
+        comment,
+      },
     },
     { new: true },
   );

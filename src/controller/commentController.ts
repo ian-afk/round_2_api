@@ -9,7 +9,9 @@ import {
 } from '../services/commentService';
 
 export const createComment = catchAsync(async (req, res) => {
-  const newComment = await createCommentService(req.body);
+  const { text, post } = req.body;
+  const userId = req.user.id;
+  const newComment = await createCommentService({ text, post, user: userId });
   res.status(201).json({
     status: 'success',
     message: 'Comment successfully created',
