@@ -6,102 +6,51 @@ import {
   updatePost as updatePostService,
   deletePost as deletePostService,
 } from '../services/postService';
+import { catchAsync } from '../utils/catchAsync';
 
-export const createPost = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const createPost = catchAsync(async (req: Request, res: Response) => {
   const newPost = await createPostService(req.body);
-  try {
-    res.status(201).json({
-      status: 'success',
-      message: 'Post created successfully',
-      post: newPost,
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
 
-export const getPost = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const post = await listPost();
-  try {
+  res.status(201).json({
+    status: 'success',
+    message: 'Post created successfully',
+    post: newPost,
+  });
+});
+
+export const getPost = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const post = await listPost();
     res.status(200).json({
       status: 'success',
       data: post,
     });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
+  },
+);
 
-export const getPostById = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const post = await findPostById(req.params.id);
+export const getPostById = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const post = await findPostById(req.params.id);
 
-  try {
     res.status(200).json({
       status: 'success',
       data: post,
     });
-  } catch (error) {
-    res.status(500).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
+  },
+);
 
-export const updatePost = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const updatePost = catchAsync(async (req: Request, res: Response) => {
   const post = await updatePostService(req.params.id, { content: req.body });
-  try {
-    res.status(200).json({
-      status: 'success',
-      message: 'Post updated successfully',
-      post,
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
-
-export const deletePost = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Post updated successfully',
+    post,
+  });
+});
+export const deletePost = catchAsync(async (req: Request, res: Response) => {
   await deletePostService(req.params.id);
-
-  try {
-    res.status(200).json({
-      status: 'success',
-      message: 'Post deleted successfully',
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    message: 'Post deleted successfully',
+  });
+});

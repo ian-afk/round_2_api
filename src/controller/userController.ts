@@ -6,83 +6,47 @@ import {
   deleteUser as deleteUserService,
   updateUser,
 } from '../services/userService';
+import { catchAsync } from 'utils/catchAsync';
 
-export const getUsers = async (req: Request, res: Response) => {
+export const getUsers = catchAsync(async (req: Request, res: Response) => {
   const users = await listUsers();
 
-  try {
-    res.status(200).json({ status: 'success', data: users });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
+  res.status(200).json({ status: 'success', data: users });
+});
 
-export const createUser = async (req, res) => {
+export const createUser = catchAsync(async (req, res) => {
   const user = req.body;
 
   const newUser = await createUserService(user);
+  res.status(201).json({
+    status: 'success',
+    message: 'User created successfully',
+    data: newUser,
+  });
+});
 
-  try {
-    res.status(201).json({
-      status: 'success',
-      message: 'User created successfully',
-      data: newUser,
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
-
-export const getUserById = async (req, res) => {
+export const getUserById = catchAsync(async (req, res) => {
   const user = await findUserById(req.params.id);
 
-  try {
-    res.status(200).json({ status: 'success', user });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
+  res.status(200).json({ status: 'success', user });
+});
 
-export const updateUsers = async (req, res) => {
+export const updateUsers = catchAsync(async (req, res) => {
   const userId = req.params.id;
   const user = await updateUser(userId, req.body);
 
-  try {
-    res.status(200).json({
-      status: 'success',
-      message: 'User successfully upadated',
-      user,
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
-
-export const deleteUser = async (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'User successfully upadated',
+    user,
+  });
+});
+export const deleteUser = catchAsync(async (req, res) => {
   const userId = req.params.id;
 
-  try {
-    await deleteUserService(userId);
-    res.status(200).json({
-      status: 'success',
-      message: 'User deleted Successfully',
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
+  await deleteUserService(userId);
+  res.status(200).json({
+    status: 'success',
+    message: 'User deleted Successfully',
+  });
+});

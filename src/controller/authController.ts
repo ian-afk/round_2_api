@@ -1,9 +1,10 @@
+import { catchAsync } from 'utils/catchAsync';
 import {
   signUp as signUpServuce,
   signIn as signInService,
 } from '../services/authService';
 
-export const signup = async (req, res) => {
+export const signup = catchAsync(async (req, res) => {
   const { username, fullName, email, password } = req.body;
   const newUser = await signUpServuce({
     username,
@@ -16,9 +17,9 @@ export const signup = async (req, res) => {
     status: 'success',
     ...newUser,
   });
-};
+});
 
-export const signin = async (req, res) => {
+export const signin = catchAsync(async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -29,4 +30,4 @@ export const signin = async (req, res) => {
     status: 'success',
     token,
   });
-};
+});
