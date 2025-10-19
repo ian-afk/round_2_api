@@ -6,6 +6,11 @@ const postSchema = new Schema(
       type: String,
       required: [true, 'Post content is required'],
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'User is required'],
+    },
   },
   { timestamps: true },
 );
