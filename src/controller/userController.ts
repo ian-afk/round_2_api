@@ -6,7 +6,7 @@ import {
   deleteUser as deleteUserService,
   updateUser,
 } from '../services/userService';
-import { catchAsync } from 'utils/catchAsync';
+import { catchAsync } from '../utils/catchAsync';
 
 export const getUsers = catchAsync(async (req: Request, res: Response) => {
   const users = await listUsers();

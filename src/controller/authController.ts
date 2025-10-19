@@ -1,4 +1,4 @@
-import { catchAsync } from 'utils/catchAsync';
+import { catchAsync } from '../utils/catchAsync';
 import {
   signUp as signUpServuce,
   signIn as signInService,
