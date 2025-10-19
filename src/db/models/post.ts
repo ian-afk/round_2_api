@@ -2,7 +2,10 @@ import mongoose, { Schema } from 'mongoose';
 
 const postSchema = new Schema(
   {
-    content: String,
+    content: {
+      type: String,
+      required: [true, 'Post content is required'],
+    },
   },
   { timestamps: true },
 );
