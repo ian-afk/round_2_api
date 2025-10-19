@@ -1,6 +1,7 @@
 import express from 'express';
 
 import postRoutes from './routes/postRoute';
+import userRoutes from './routes/userRoute';
 
 const app = express();
 
@@ -11,5 +12,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/post', postRoutes);
+app.use('/api/users', userRoutes);
 
 export { app };
