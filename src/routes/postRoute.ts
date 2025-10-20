@@ -10,7 +10,7 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.route('/').get(protect, getPost).post(protect, createPost);
+router.route('/').get(getPost).post(protect, createPost);
 
 router
   .route('/:id')

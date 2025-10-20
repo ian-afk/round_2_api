@@ -16,6 +16,11 @@ export const protect = catchAsync(async (req, res, next) => {
   ) {
     token = req.headers.authorization.split(' ')[1];
   }
+
+  if (!token && req.cookies?.token) {
+    token = req.cookies.token;
+  }
+
   if (!token) {
     return next(new AppError(`You're not logged in! Please login.`, 401));
   }
@@ -32,6 +37,12 @@ export const protect = catchAsync(async (req, res, next) => {
     return next(new AppError('The user does not exists', 401));
   }
 
-  req.user = { id: decoded.userId };
+  req.user = {
+    id: decoded.userId,
+    user: {
+      username: currentUser.username,
+      fullName: currentUser.fullName,
+    },
+  };
   next();
 });
