@@ -2,9 +2,11 @@ import express from 'express';
 
 import postRoutes from './routes/postRoute';
 import userRoutes from './routes/userRoute';
+import cors from 'cors';
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
