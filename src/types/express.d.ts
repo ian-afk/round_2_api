@@ -5,6 +5,10 @@ declare global {
     export interface Request {
       user?: {
         id: string;
+        user: {
+          username: string;
+          fullName: string;
+        };
       };
     }
   }

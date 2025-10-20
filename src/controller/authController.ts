@@ -12,6 +12,14 @@ export const signup = catchAsync(async (req, res) => {
     email,
     password,
   });
+  const token = newUser.token;
+  res.cookie('token', token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    maxAge: 60 * 60 * 1000,
+    path: '/',
+  });
 
   res.status(201).json({
     status: 'success',
@@ -26,6 +34,14 @@ export const signin = catchAsync(async (req, res) => {
     throw new Error('Please provide email and password');
   }
   const token = await signInService({ email, password });
+
+  res.cookie('token', token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    maxAge: 60 * 60 * 1000,
+    path: '/',
+  });
   res.status(200).json({
     status: 'success',
     token,
