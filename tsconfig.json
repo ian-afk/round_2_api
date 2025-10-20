@@ -17,7 +17,8 @@
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": ["src/**/*.ts", "src/**/*.json", "src/app.ts", "src/index.ts"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "src/test/**/*"],

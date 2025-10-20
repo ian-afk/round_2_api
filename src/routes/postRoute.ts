@@ -1,3 +1,4 @@
+import { protect } from '../middleware/protectRoute';
 import {
   createPost,
   deletePost,
@@ -9,8 +10,12 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.route('/').get(getPost).post(createPost);
+router.route('/').get(protect, getPost).post(protect, createPost);
 
-router.route('/:id').get(getPostById).put(updatePost).delete(deletePost);
+router
+  .route('/:id')
+  .get(protect, getPostById)
+  .put(protect, updatePost)
+  .delete(protect, deletePost);
 
 export default router;
